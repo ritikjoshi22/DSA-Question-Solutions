@@ -26,7 +26,7 @@ int calHeight(node* root)
     return max(lHeight, rHeight) +1;
 }
 
-int calDiameter(node* root)
+int calDiameter1(node* root)
 {
     if(root == NULL){
         return 0;
@@ -35,8 +35,24 @@ int calDiameter(node* root)
     int rHeight = calHeight(root->right);
     int currHeight = lHeight+rHeight + 1;
 
-    int lDiameter = calDiameter(root->left);
-    int rDiameter = calDiameter(root->right);
+    int lDiameter = calDiameter1(root->left);
+    int rDiameter = calDiameter1(root->right);
+
+    return max(currHeight, max(lDiameter, rDiameter));
+}
+
+int calDiameter2(node* root, int* height)
+{
+    if(root == NULL){
+        *height = 0;
+        return 0;
+    }
+    int lh = 0, rh = 0;
+    int lDiameter = calDiameter2(root->left, &lh);
+    int rDiameter = calDiameter2(root->right, &rh);
+
+    int currHeight = lh + rh + 1;
+    *height = max(lh, rh) + 1;
 
     return max(currHeight, max(lDiameter, rDiameter));
 }
@@ -51,8 +67,10 @@ int main()
     root->right->left = new node(6);
     root->right->right = new node(7);
 
+    int height = 0;
     cout<<"Height of the tree:"<<calHeight(root)<<endl;
-    cout<<"Diameter of the tree:"<<calDiameter(root)<<endl;
+    cout<<"Diameter of the tree from method1:"<<calDiameter1(root)<<endl;
+    cout<<"Diameter of the tree from method2:"<<calDiameter2(root, &height)<<endl;
 
     return 0;
 }
