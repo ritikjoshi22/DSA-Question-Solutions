@@ -41,8 +41,8 @@ void printPreorder(node* root)
 
 int main()
 {
-    int arr[] = {10,20,30,40,50};
-    node* root = sortedArrayToBST(arr,0,4);
+    int arr[] = {10,20,30,40,50,60};
+    node* root = sortedArrayToBST(arr,0,5);
     printPreorder(root);
     return 0;
 }
